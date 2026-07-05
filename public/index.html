@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StudentOS — your study companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">◈</span>
+      <span class="brand-name">StudentOS</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-tab="dashboard"><span class="ico">⌂</span>Dashboard</button>
+      <button class="nav-item" data-tab="notes"><span class="ico">✎</span>Notes</button>
+      <button class="nav-item" data-tab="assignments"><span class="ico">▤</span>Assignments</button>
+      <button class="nav-item" data-tab="focus"><span class="ico">◷</span>Focus Mode</button>
+      <button class="nav-item" data-tab="flashcards"><span class="ico">◆</span>Flashcards</button>
+      <button class="nav-item" data-tab="files"><span class="ico">⌘</span>Resource Vault</button>
+      <button class="nav-item" data-tab="analytics"><span class="ico">▲</span>Analytics</button>
+      <button class="nav-item" data-tab="settings"><span class="ico">⚙</span>Settings</button>
+    </nav>
+    <div class="pet-card" id="pet-card">
+      <div class="pet-emoji" id="pet-emoji">🐱</div>
+      <div class="pet-info">
+        <div class="pet-name" id="pet-name">Name me in Settings</div>
+        <div class="pet-mood" id="pet-mood">curious</div>
+        <div class="pet-bar"><div class="pet-bar-fill" id="pet-bar-fill"></div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="topbar">
+      <div class="greeting">
+        <h1 id="greeting-text">Good evening, Krishna Lahari</h1>
+        <p id="today-date" class="subtle"></p>
+      </div>
+      <div class="topbar-right">
+        <div class="streak-chip" title="Daily streak">🔥 <span id="streak-count">0</span></div>
+        <div class="coin-chip" title="Coins">🪙 <span id="coin-count">0</span></div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark and light mode">
+          <span id="theme-icon">☀</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- XP quest ribbon (signature element) -->
+    <div class="quest-ribbon">
+      <div class="quest-level" id="quest-level">Lv. 1</div>
+      <div class="quest-track">
+        <div class="quest-fill" id="quest-fill"></div>
+        <div class="quest-notches" id="quest-notches"></div>
+      </div>
+      <div class="quest-xp"><span id="xp-current">0</span>/<span id="xp-needed">100</span> XP</div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section class="tab-panel active" id="tab-dashboard">
+      <div class="grid dashboard-grid">
+        <div class="card span-2">
+          <div class="card-head"><h2>Today</h2></div>
+          <div class="today-stats">
+            <div class="stat"><span class="stat-num" id="stat-assignments">0</span><span class="stat-label">assignments due soon</span></div>
+            <div class="stat"><span class="stat-num" id="stat-focus">0m</span><span class="stat-label">focus time today</span></div>
+            <div class="stat"><span class="stat-num" id="stat-notes">0</span><span class="stat-label">notes this week</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Ask the AI planner</h2></div>
+          <button class="btn btn-primary full" id="btn-plan-day">Plan my day</button>
+          <div class="ai-output" id="plan-output"></div>
+        </div>
+
+        <div class="card span-2">
+          <div class="card-head"><h2>Upcoming deadlines</h2></div>
+          <div id="dashboard-assignments" class="mini-list"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Achievements</h2></div>
+          <div id="achievements-list" class="achievements"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+    <section class="tab-panel" id="tab-notes">
+      <div class="panel-toolbar">
+        <input type="text" id="note-search" placeholder="Search notes..." class="input" />
+        <button class="btn btn-primary" id="btn-new-note">+ New note</button>
+      </div>
+      <div class="notes-layout">
+        <div class="notes-grid" id="notes-grid"></div>
+        <div class="note-editor card" id="note-editor" hidden>
+          <input type="text" id="note-title" class="input title-input" placeholder="Note title" />
+          <div class="note-editor-row">
+            <input type="text" id="note-subject" class="input" placeholder="Subject (e.g. DSA)" />
+            <input type="color" id="note-color" value="#7C5CFF" />
+          </div>
+          <textarea id="note-content" placeholder="Write your notes here..." rows="12"></textarea>
+          <div class="note-editor-actions">
+            <button class="btn btn-primary" id="btn-save-note">Save note</button>
+            <button class="btn btn-ghost" id="btn-ai-summarize">✨ AI summarize</button>
+            <button class="btn btn-ghost" id="btn-ai-flashcards">✨ Generate flashcards</button>
+            <button class="btn btn-danger" id="btn-delete-note" hidden>Delete</button>
+          </div>
+          <div class="ai-output" id="note-ai-output"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSIGNMENTS -->
+    <section class="tab-panel" id="tab-assignments">
+      <div class="panel-toolbar">
+        <button class="btn btn-primary" id="btn-new-assignment">+ New assignment</button>
+      </div>
+      <div class="table-wrap">
+        <table class="assignments-table">
+          <thead>
+            <tr><th>Title</th><th>Subject</th><th>Due</th><th>Priority</th><th>Progress</th><th>Status</th><th></th></tr>
+          </thead>
+          <tbody id="assignments-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FOCUS -->
+    <section class="tab-panel" id="tab-focus">
+      <div class="focus-layout">
+        <div class="card focus-card">
+          <div class="timer-display" id="timer-display">25:00</div>
+          <div class="timer-mode" id="timer-mode">Focus session</div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" id="btn-timer-start">Start</button>
+            <button class="btn btn-ghost" id="btn-timer-pause" hidden>Pause</button>
+            <button class="btn btn-ghost" id="btn-timer-reset">Reset</button>
+          </div>
+          <div class="timer-presets">
+            <button class="chip" data-mins="25">25 min</button>
+            <button class="chip" data-mins="15">15 min</button>
+            <button class="chip" data-mins="45">45 min</button>
+            <button class="chip" data-mins="5">5 min break</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Ambient sound</h2></div>
+          <div class="ambient-options">
+            <button class="chip ambient-chip active" data-sound="none">Silence</button>
+            <button class="chip ambient-chip" data-sound="rain">🌧 Rain</button>
+            <button class="chip ambient-chip" data-sound="cafe">☕ Cafe</button>
+            <button class="chip ambient-chip" data-sound="forest">🌲 Forest</button>
+          </div>
+          <p class="subtle small">Ambient audio is a lightweight generated tone in this demo build — swap in real audio files for production.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLASHCARDS -->
+    <section class="tab-panel" id="tab-flashcards">
+      <div class="panel-toolbar">
+        <p class="subtle">Flashcards are generated automatically from your notes. Open a note and click "Generate flashcards".</p>
+      </div>
+      <div id="flashcard-decks" class="deck-grid"></div>
+    </section>
+
+    <!-- FILES -->
+    <section class="tab-panel" id="tab-files">
+      <div class="panel-toolbar">
+        <form id="upload-form" class="upload-form">
+          <input type="text" id="upload-subject" class="input" placeholder="Subject folder (e.g. DSA)" required />
+          <input type="file" id="upload-file" required />
+          <button class="btn btn-primary" type="submit">Upload & organize</button>
+        </form>
+      </div>
+      <div id="files-by-subject"></div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="tab-panel" id="tab-analytics">
+      <div class="grid">
+        <div class="card">
+          <div class="card-head"><h2>Focus minutes by day</h2></div>
+          <canvas id="chart-focus" height="200"></canvas>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Assignments by status</h2></div>
+          <canvas id="chart-assignments" height="200"></canvas>
+        </div>
+      </div>
+    </section>
+    <!-- SETTINGS -->
+    <section class="tab-panel" id="tab-settings">
+      <div class="grid settings-grid">
+        <div class="card">
+          <div class="card-head"><h2>Profile</h2></div>
+          <label class="field-label" for="settings-name">Display name</label>
+          <input type="text" id="settings-name" class="input" placeholder="Your name" maxlength="40" />
+
+          <label class="field-label" for="settings-pet-name">Pet name</label>
+          <input type="text" id="settings-pet-name" class="input" placeholder="Give your pet a name" maxlength="24" />
+
+          <label class="field-label">Choose your pet</label>
+          <div class="pet-picker" id="pet-picker">
+            <button class="pet-option" data-pet="cat">🐱<span>Cat</span></button>
+            <button class="pet-option" data-pet="dog">🐶<span>Dog</span></button>
+            <button class="pet-option" data-pet="cactus">🌵<span>Cactus</span></button>
+            <button class="pet-option" data-pet="plant">🌱<span>Plant</span></button>
+            <button class="pet-option" data-pet="penguin">🐧<span>Penguin</span></button>
+          </div>
+
+          <button class="btn btn-primary" id="btn-save-settings" style="margin-top:16px;">Save profile</button>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h2>Appearance</h2></div>
+          <label class="field-label">Theme</label>
+          <div class="theme-picker">
+            <button class="chip theme-option" data-theme-choice="dark">🌙 Dark</button>
+            <button class="chip theme-option" data-theme-choice="light">☀ Light</button>
+          </div>
+          <p class="subtle small" style="margin-top:18px;">More settings — data export, notification preferences — can go here as the app grows.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- New assignment modal -->
+<div class="modal-overlay" id="assignment-modal" hidden>
+  <div class="modal card">
+    <div class="modal-head">
+      <h2>New assignment</h2>
+      <button class="modal-close" id="close-assignment-modal" aria-label="Close">✕</button>
+    </div>
+    <label class="field-label" for="new-assignment-title">Title</label>
+    <input type="text" id="new-assignment-title" class="input" placeholder="e.g. DSA Problem Set 5" />
+
+    <label class="field-label" for="new-assignment-subject">Subject</label>
+    <input type="text" id="new-assignment-subject" class="input" placeholder="e.g. DSA" />
+
+    <label class="field-label" for="new-assignment-professor">Professor</label>
+    <input type="text" id="new-assignment-professor" class="input" placeholder="Optional" />
+
+    <div class="note-editor-row">
+      <div style="flex:1;">
+        <label class="field-label" for="new-assignment-due">Due date</label>
+        <input type="date" id="new-assignment-due" class="input" />
+      </div>
+      <div style="flex:1;">
+        <label class="field-label" for="new-assignment-priority">Priority</label>
+        <select id="new-assignment-priority" class="input">
+          <option>Low</option>
+          <option selected>Medium</option>
+          <option>High</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="note-editor-actions">
+      <button class="btn btn-primary" id="btn-create-assignment">Add assignment</button>
+      <button class="btn btn-ghost" id="btn-cancel-assignment">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- First-run onboarding modal -->
+<div class="modal-overlay" id="onboarding-modal" hidden>
+  <div class="modal card">
+    <div class="modal-head">
+      <h2>Welcome to StudentOS</h2>
+    </div>
+    <p class="subtle">Let's set up your profile before you dive in.</p>
+
+    <label class="field-label" for="onboard-name">Your name</label>
+    <input type="text" id="onboard-name" class="input" placeholder="Your name" maxlength="40" />
+
+    <label class="field-label">Choose your study companion</label>
+    <div class="pet-picker" id="onboard-pet-picker">
+      <button class="pet-option" data-pet="cat">🐱<span>Cat</span></button>
+      <button class="pet-option" data-pet="dog">🐶<span>Dog</span></button>
+      <button class="pet-option" data-pet="cactus">🌵<span>Cactus</span></button>
+      <button class="pet-option" data-pet="plant">🌱<span>Plant</span></button>
+      <button class="pet-option" data-pet="penguin">🐧<span>Penguin</span></button>
+    </div>
+
+    <label class="field-label" for="onboard-pet-name">Name your companion</label>
+    <input type="text" id="onboard-pet-name" class="input" placeholder="e.g. Pixel" maxlength="24" />
+
+    <div class="note-editor-actions">
+      <button class="btn btn-primary" id="btn-finish-onboarding">Get started</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
