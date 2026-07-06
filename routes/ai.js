@@ -5,7 +5,6 @@ const GEMINI_MODEL = 'gemini-2.0-flash';
 function hasKey() {
   return !!process.env.GEMINI_API_KEY;
 }
-
 async function callGemini(prompt) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${process.env.GEMINI_API_KEY}`;
   const res = await fetch(url, {

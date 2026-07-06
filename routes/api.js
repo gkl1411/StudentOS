@@ -5,7 +5,6 @@ const fs = require('fs');
 const { v4: uuid } = require('uuid');
 const { readDB, writeDB } = require('./db');
 const ai = require('./ai');
-
 const router = express.Router();
 
 const UPLOAD_ROOT = path.join(__dirname, '..', 'uploads');

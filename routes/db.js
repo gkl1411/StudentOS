@@ -11,5 +11,4 @@ function readDB() {
 function writeDB(data) {
   fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
 }
-
 module.exports = { readDB, writeDB };

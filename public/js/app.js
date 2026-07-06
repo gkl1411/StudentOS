@@ -5,7 +5,6 @@ const state = {
   ambientCtx: null,
   ambientNodes: null
 };
-
 // ---------------- Utilities ----------------
 
 function toast(msg) {
