@@ -45,4 +45,4 @@ uploads/                 Auto-organized uploaded files, by subject
 ``` 
 
 # Future Scope of the project
-
+To make it more effective, students can join peer groups who share similar interests so they can exchange knowledge in the context they love.
