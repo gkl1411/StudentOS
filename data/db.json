@@ -1,0 +1,129 @@
+{
+  "user": {
+    "name": "Krishna Kousthubh",
+    "xp": 70,
+    "level": 1,
+    "streak": 1,
+    "lastActiveDate": "2026-07-05",
+    "coins": 40,
+    "pet": {
+      "type": "penguin",
+      "name": "Pixel",
+      "mood": "curious",
+      "growth": 22
+    },
+    "theme": "dark"
+  },
+  "notes": [
+    {
+      "id": "n1",
+      "title": "Binary Trees - Traversals",
+      "subject": "DSA",
+      "color": "#7C5CFF",
+      "pinned": true,
+      "tags": [
+        "#DSA",
+        "#trees"
+      ],
+      "content": "Inorder: left, root, right. Preorder: root, left, right. Postorder: left, right, root. Use recursion or an explicit stack for iterative versions. BFS uses a queue for level order traversal.",
+      "updatedAt": "2026-07-01T10:00:00.000Z"
+    },
+    {
+      "id": "n2",
+      "title": "Newton's Laws Recap",
+      "subject": "Physics",
+      "color": "#23B5A6",
+      "pinned": false,
+      "tags": [
+        "#physics"
+      ],
+      "content": "First law: an object stays at rest or in uniform motion unless acted on by a net force. Second law: F = ma. Third law: every action has an equal and opposite reaction.",
+      "updatedAt": "2026-06-29T10:00:00.000Z"
+    }
+  ],
+  "assignments": [
+    {
+      "id": "a1",
+      "title": "DSA Problem Set 4",
+      "subject": "DSA",
+      "professor": "Dr. Rao",
+      "dueDate": "2026-07-09",
+      "priority": "High",
+      "progress": 40,
+      "status": "In Progress"
+    },
+    {
+      "id": "a2",
+      "title": "Physics Lab Report",
+      "subject": "Physics",
+      "professor": "Dr. Iyer",
+      "dueDate": "2026-07-07",
+      "priority": "Medium",
+      "progress": 0,
+      "status": "Not Started"
+    }
+  ],
+  "flashcardDecks": [
+    {
+      "id": "d5db3d2f-5433-47cc-ae12-0ddd879ecf0c",
+      "subject": "DSA",
+      "noteId": "n1",
+      "cards": [
+        {
+          "id": "fc_1783250516408_0",
+          "front": "Fill in the blank (DSA): Inorder: left, ـــــ right",
+          "back": "root,"
+        },
+        {
+          "id": "fc_1783250516408_1",
+          "front": "Fill in the blank (DSA): Preorder: root, ـــــ right",
+          "back": "left,"
+        },
+        {
+          "id": "fc_1783250516408_2",
+          "front": "Fill in the blank (DSA): Postorder: left, ـــــ root",
+          "back": "right,"
+        },
+        {
+          "id": "fc_1783250516408_3",
+          "front": "Fill in the blank (DSA): Use recursion or an ـــــ stack for iterative versions",
+          "back": "explicit"
+        },
+        {
+          "id": "fc_1783250516408_4",
+          "front": "Fill in the blank (DSA): BFS uses a queue ـــــ level order traversal",
+          "back": "for"
+        }
+      ],
+      "createdAt": "2026-07-05T11:21:56.409Z"
+    }
+  ],
+  "focusSessions": [],
+  "achievements": [
+    {
+      "id": "first_assignment",
+      "label": "First Assignment",
+      "icon": "🏅",
+      "earned": true
+    },
+    {
+      "id": "streak7",
+      "label": "7 Day Streak",
+      "icon": "🔥",
+      "earned": false
+    },
+    {
+      "id": "study10",
+      "label": "Study 10 Hours",
+      "icon": "📚",
+      "earned": false
+    },
+    {
+      "id": "pomodoro100",
+      "label": "Finish 100 Pomodoros",
+      "icon": "🧠",
+      "earned": false
+    }
+  ],
+  "files": []
+}
